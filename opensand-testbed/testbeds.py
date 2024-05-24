@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class BasicTestbed(object):
-    def __init__(self, host_ip="192.168.1.199", display_number=0, linux=False):
+    def __init__(self, host_ip="192.168.199", display_number=0, linux=True):
         self.host_ip = host_ip
         self.display_number = display_number
         self.linux = linux
@@ -91,6 +91,7 @@ class BasicTestbed(object):
         logger.debug("Launching Web Browser on User Workstation")
         docker_client = docker.from_env()
         workstation_container = docker_client.containers.get(os.getenv("WS_ST_CONTAINER_NAME"))
+        logger.debug("REACHED HERE")
         workstation_container.exec_run("qupzilla", detach=True)
 
     def set_downlink_attenuation(self, attenuation_value=0):

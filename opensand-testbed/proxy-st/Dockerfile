@@ -1,5 +1,7 @@
 FROM ubuntu:16.04
-RUN echo "deb [trusted=yes] http://packages.net4sat.org/opensand xenial oldstable" | tee /etc/apt/sources.list.d/opensand.list
+#RUN echo "deb [trusted=yes] http://packages.net4sat.org/opensand xenial oldstable" | tee /etc/apt/sources.list.d/opensand.list
+RUN rm /etc/apt/sources.list.d/opensand.list
+RUN echo "deb [trusted=yes] https://raw.githubusercontent.com/CNES/net4sat-packages/master/jammy/ jammy stable" | tee /etc/apt/sources.list.d/net4sat.list
 RUN apt-get update
 RUN apt-get install -y netcat
 RUN apt-get install -y iputils-ping

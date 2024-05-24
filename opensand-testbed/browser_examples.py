@@ -58,6 +58,7 @@ if __name__ == "__main__":
 
     # Launch the testbed and deploy the PEP/VPN if relevant
     scenario.deploy_scenario()
+    #scenario.testbed.set_plr_percentage(5, st_out=False, gw_out=True)
 
     # Open applications in the network
     testbed.launch_web_browser()

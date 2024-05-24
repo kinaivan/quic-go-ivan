@@ -175,7 +175,7 @@ def plr_test_scenario():
                 for j in range(0, int(os.getenv("PLR_META_ITERATIONS"))):
                     logger.debug("Running PLR for " + str(scenario.name) +  " at " + str(plr_string) + " batch " + str(j) + " of " + str(os.getenv("PLR_META_ITERATIONS")))
                     scenario.deploy_scenario()
-                    scenario.testbed.set_plr_percentage(plr_string, st_out=False, gw_out=True)
+                    scenario.testbed.set_plr_percentage(10, st_out=False, gw_out=True)
                     for i in range(0, int(os.getenv("IPERF_ITERATIONS"))):
                         scenario.benchmarks = copy.deepcopy(benchmarks)
                         scenario.run_benchmarks(deployed=True)
@@ -196,7 +196,7 @@ def plr_test_scenario():
     logger.success("PLR Test Complete")
 
 
-HOST_IP = "192.168.0.15" # Set this to the IP address of an X Server (Display #0)
+HOST_IP = "192.168.16.217" # Set this to the IP address of an X Server (Display #0)
 if __name__ == '__main__':
     # These functions draw on parameters from the .env file to determine which scenarios to run and which portions of the scenario. See the QPEP README for some advice on using .env to run simulations in parallel
     logger.remove()
@@ -204,7 +204,7 @@ if __name__ == '__main__':
     logger.add(sys.stderr, level="DEBUG")
 
     # Run Iperf Goodput Tests
-    #iperf_test_scenario()
+    iperf_test_scenario()
 
     # Run PLT Alexa Top 20 Test
     #plt_test_scenario()
@@ -221,4 +221,4 @@ if __name__ == '__main__':
     #plt_test_scenario(leo_testbed)
 
     #Next look at ACK decimation
-    ack_bundling_iperf_scenario()
+    #ack_bundling_iperf_scenario()

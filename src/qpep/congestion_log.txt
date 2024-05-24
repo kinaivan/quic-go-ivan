@@ -1,0 +1,5 @@
+Size of cwnd at moment 2024-04-24 14:17:03 is 5840
+Size of cwnd at moment 2024-04-24 14:17:03 is 37960
+Size of cwnd at moment 2024-04-24 14:17:03 is 70080
+Size of cwnd at moment 2024-04-24 14:17:03 is 102200
+Size of cwnd at moment 2024-04-24 14:17:05 is 134320

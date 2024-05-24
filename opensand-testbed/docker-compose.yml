@@ -13,13 +13,14 @@ services:
       - ./satellite/config:/opensand_config
       - ./satellite/attenuation_scenario:/attenuation_scenario
       - ./satellite/delay_scenario:/delay_scenario
+      - $HOME/.Xauthority:/root/.Xauthority:rw
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
     networks:
       emulation:
         ipv4_address: ${EMU_NETWORK_HEAD:-172.20}.0.2
     privileged: true
     environment:
-      DISPLAY: :1
+      DISPLAY: :0
     depends_on:
       - "gateway"
       - "terminal"
@@ -34,6 +35,7 @@ services:
     volumes:
       - ./gateway/config:/opensand_config
       - ../src/:/root/go/src
+      - $HOME/.Xauthority:/root/.Xauthority:rw
     networks:
       emulation:
         ipv4_address: ${EMU_NETWORK_HEAD:-172.20}.0.3
@@ -63,6 +65,8 @@ services:
     volumes:
       - ./terminal/config:/opensand_config
       - ../src/:/root/go/src
+      - $HOME/.Xauthority:/root/.Xauthority:rw
+      - $HOME/test:/test_container
     environment:
       GOPATH: /root/go
     networks:
@@ -96,8 +100,9 @@ services:
     sysctls:
       - net.ipv6.conf.all.disable_ipv6=1
     environment:
-      DISPLAY:
+      DISPLAY: :0
     volumes:
+      - $HOME/.Xauthority:/root/.Xauthority:rw
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
   ws-gw:
     container_name: ${WS_GW_CONTAINER_NAME:-ws-gw}
@@ -114,6 +119,7 @@ services:
     volumes:
       - "../src/:/root/go/src"
       - "./ws-gw/config:/opensand_config"
+      - $HOME/.Xauthority:/root/.Xauthority:rw
   ws-ovpn:
     container_name: ${WS_OVPN_CONTAINER_NAME:-ws-ovpn}
     #image: pavja2/qpep:ws-ovpn
@@ -124,6 +130,7 @@ services:
       - "${WS_OVPN_PORT:-1994}:1994/udp"
     volumes:
       - ./ws-ovpn/:/etc/openvpn
+      - $HOME/.Xauthority:/root/.Xauthority:rw
     sysctls:
       - net.ipv6.conf.all.disable_ipv6= 1
     networks:
@@ -155,7 +162,7 @@ networks:
       driver: default
       config:
         - subnet: "${GW_NETWORK_HEAD:-172.22}.0.0/24"
-        - subnet: "${GW_IP6_HEAD:-2001:660}:6602:142::1/64"
+        - subnet: "${GW_IP6_HEAD:-2001:660}:6602:142::/64"
   stlan:
     name: ${ST_NETWORK_NAME:-stlan}
     driver: bridge
@@ -164,7 +171,7 @@ networks:
       driver: default
       config:
         - subnet: "${ST_NETWORK_HEAD:-172.21}.0.0/24"
-        - subnet: "${ST_IP6_HEAD:-2001:661}:6602:142::1/64"
+        - subnet: "${ST_IP6_HEAD:-2001:661}:6602:142::/64"
   gui:
     name: ${GUI_NETWORK_NAME:-gui}
     driver: bridge
